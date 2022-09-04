@@ -1,0 +1,16 @@
+from flask_testing import TestCase
+from app import app
+
+class BaseTestCase(TestCase):
+    def create_app(self):
+        app.config['TESTING'] = True
+        return app
+
+class MainTest(BaseTestCase):
+    def test_get_home(self):
+        response = self.client.get('/')
+
+        self.assert200(response)
+        self.assertEqual(response.json, {
+            "msg": "Hello World"
+        })
